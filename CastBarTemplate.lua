@@ -53,6 +53,9 @@ local TimeFmt = Quartz3.Util.TimeFormat
 
 local playerName = UnitName("player")
 
+local myClassColorFull = C_ClassColor.GetClassColor(UnitClassBase("player"))
+local myClassColor = { myClassColorFull.r,  myClassColorFull.g,  myClassColorFull.b }
+
 local function call(obj, method, ...)
 	if type(obj.parent[method]) == "function" then
 		return obj.parent[method](obj.parent, obj, ...)
@@ -263,7 +266,7 @@ function CastBarTemplate:UNIT_SPELLCAST_START(event, unit, guid, spellID)
 	self.fadeOut = nil
 	self.numStages = numStages
 
-	self.Bar:SetStatusBarColor(unpack(self.casting and Quartz3.db.profile.castingcolor or Quartz3.db.profile.channelingcolor))
+	self.Bar:SetStatusBarColor(unpack(self.casting and myClassColor or Quartz3.db.profile.channelingcolor))
 
 	self.Bar:SetValue(self.casting and 0 or 1)
 	self:Show()
